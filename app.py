@@ -17,7 +17,6 @@ import streamlit as st
 import numpy as np
 import copy
 import timm
-import gdown
 # Set device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -431,7 +430,7 @@ st.title("Domain-Based Image Classification Demo")
 st.write("Select an algorithm from the dropdown, then click **Start Demo** to run inference on random images from each domain.")
 
 # --- NEW: Dropdown for Algorithm Selection ---
-selected_algo = st.selectbox("Select Algorithm", ["EQRM", "ERM", "ERMPlusPlus", "HOGPACS", "IRM", "URM"])
+selected_algo = st.selectbox("Select Algorithm", ["EQRM", "ERM",  "HOGPACS", "IRM", "URM"])
 
 if st.button("Start Demo"):
     with st.spinner("Running inference, please wait..."):
