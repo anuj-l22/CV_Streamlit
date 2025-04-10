@@ -355,12 +355,9 @@ def run_demo(selected_algo):
         model_path = os.path.join(model_dir, "model.pkl")
 
         # If checkpoint is missing, issue a warning and skip.
-# Ensure models are present.
-        MODELS_DRIVE_URL = "https://drive.google.com/drive/folders/1QNcMcL89xYzU55Zqywqr9HOh6bNNZ6xF?usp=drive_link"
-        if True:
-            st.info("Model checkpoints not found locally. Downloading from Google Drive...")
-            gdown.download_folder(url=MODELS_DRIVE_URL, output="Deployment/PACS", quiet=False)
-            st.success("Models download complete.")
+        if not os.path.exists(model_path):
+            st.warning(f"Model checkpoint for domain `{domain_name}` not found at `{model_path}`.")
+            continue
 
         # Build the WholeFish model and load the checkpoint.
         model = WholeFish(input_shape, num_classes, hparams)
@@ -430,7 +427,7 @@ st.title("Domain-Based Image Classification Demo")
 st.write("Select an algorithm from the dropdown, then click **Start Demo** to run inference on random images from each domain.")
 
 # --- NEW: Dropdown for Algorithm Selection ---
-selected_algo = st.selectbox("Select Algorithm", ["EQRM", "ERM",  "HOGPACS", "IRM", "URM"])
+selected_algo = st.selectbox("Select Algorithm", ["EQRM", "ERM", "ERMPlusPlus", "HOGPACS", "IRM", "URM"])
 
 if st.button("Start Demo"):
     with st.spinner("Running inference, please wait..."):
